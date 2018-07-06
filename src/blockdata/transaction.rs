@@ -926,5 +926,14 @@ mod tests {
             _ => panic!("Wrong error type"),
         }
     }
+
+    #[test]
+    fn test_transaction_no_vin() {
+        let hex_tx = hex_bytes("02000000000100ca9a3b00000000160014716f8e8fa281cb42bb6900ce35b73a13fa3e66e000000000").unwrap();
+        let tx: Result<Transaction, _> = deserialize(&hex_tx);
+        assert!(tx.is_ok());
+        let realtx = tx.unwrap();
+        assert_eq!(realtx.input.len(), 0);
+    }
 }
 
